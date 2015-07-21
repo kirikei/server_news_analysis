@@ -1,0 +1,3 @@
+#gitignoreの編集
+#libは無視する
+lib/

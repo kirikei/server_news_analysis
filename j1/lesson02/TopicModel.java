@@ -133,7 +133,6 @@ public class TopicModel {
 			topic_pw.close();
 
 		} catch (IOException ex) {
-			//��O������
 			ex.printStackTrace();
 		}
 		// Create a new instance with high probability of topic 0

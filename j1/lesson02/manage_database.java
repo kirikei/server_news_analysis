@@ -24,7 +24,8 @@ public class manage_database {
 
 				String create_query = "create view current_news_views as " +
 						"select aid, title, summary, link, media, image, category, pid, pubdate, analyzed_at" +
-						" from newsarticles where analyzed_at between current_timestamp  + '-1 day' and current_timestamp";
+						" from newsarticles where analyzed_at between (select max(analyzed_at) from newsarticles)" +
+						"+ '-1 day' and (select max(analyzed_at) from newsarticles)";
 				st1.executeQuery(create_query);
 				st1.close();
 			}else{

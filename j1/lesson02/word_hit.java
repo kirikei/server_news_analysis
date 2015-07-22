@@ -60,6 +60,7 @@ public class word_hit {
 						String memo = null;
 
 						while(i < strs.length){
+							try{
 							String regex = "(\\[Text=)(.*?)( C.*?NamedEntityTag=)(.*)";
 							Pattern p = Pattern.compile(regex);
 							//System.out.println("aaa");
@@ -86,6 +87,10 @@ public class word_hit {
 									}
 								}
 
+							}
+							}catch(Exception e){
+								i++;
+								continue;
 							}
 							i++;
 

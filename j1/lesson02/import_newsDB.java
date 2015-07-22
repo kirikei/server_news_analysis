@@ -21,10 +21,10 @@ public class import_newsDB {
 	private static int Max_file = 10000;
 	public static String Database_path = 
 			//"jdbc:sqlite:/Users/admin/Documents/workspace/server_news_analysis/relevant_news.db";
-			//"jdbc:postgresql://localhost:5432/server_news_database";
-			"jdbc:postgresql://localhost:5432/server_news_development";
-	public static String UserName = "admin";
-	public static String Pass = "";
+			"jdbc:postgresql://localhost:5432/server_news_database";
+			//"jdbc:postgresql://localhost:5432/server_news_development";
+	public static String UserName = "postgres";
+	public static String Pass = "postgres";
 	//"jdbc:sqlite:/Users/admin/Documents/java_set/test.db");
 
 	//トップニュースを取り出す(pid = NULL)

@@ -75,12 +75,13 @@ public class cut_file {
 				BufferedReader br = new BufferedReader(new FileReader(replace_file));	      
 				String str;
 				while((str = br.readLine()) != null){
-					str = str.replace("|-", "bar-");
+					str = str.replace("|", "bar");
 					str = str.replace("$-", "dol-");
 					str = str.replace("/", "_");
 					str = str.replace("'", "_");//SQLに対応するため
 					str = str.replace("\t", " ");//タブによるバグを防ぐ
-					str = str.replace("*-", "Ast-");
+					str = str.replace("*", "Ast");
+					str = str.replace("+", "Plus");
 					rows.add(str);
 				}
 				br.close();

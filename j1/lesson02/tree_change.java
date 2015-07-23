@@ -44,6 +44,7 @@ public class tree_change {
 	        	String cs =  second_facter(t_facters[n]);
 	        	while(c < i){
 	        		if(second_facter(t_facters[c]).equals(cf)){
+	        			try{
 	        			t_facters[n] = t_facters[n].replaceAll(cf,first_facter(t_facters[c]));
 	        			t_facters[n] = t_facters[n].replaceAll(br_type(t_facters[n]),"conj'");
 	        			if(organize_entity.check_in_list(verbs,cf) != -1 && organize_entity.check_in_list(verbs,cs) != -1){
@@ -58,6 +59,11 @@ public class tree_change {
 	        					}
 	        					cc++;
 	        				}
+	        			}
+	        			}catch(Exception e){
+	        				System.err.println(e);
+	        				c++;
+	        				continue;
 	        			}
 	        			
 	        		}
@@ -76,6 +82,7 @@ public class tree_change {
 	        		//System.out.println(af);
 	        		//System.out.println(as);
 	        		if(second_facter(t_facters[a]).equals(af)){
+	        			try{
 	        			t_facters[n] = t_facters[n].replaceAll(af,first_facter(t_facters[a]));
 	        			t_facters[n] = t_facters[n].replaceAll(br_type(t_facters[n]),"appos'");
 	        			if(organize_entity.check_in_list(verbs,af) != -1 && organize_entity.check_in_list(verbs,as) != -1){
@@ -91,6 +98,11 @@ public class tree_change {
 	        					aa++;
 	        				}
 	        			}
+	        			}catch(Exception e){
+	        				System.err.println(e);
+	        				a++;
+	        				continue;
+	        			}
 	        		}
 	        		a++;
 	        	}
@@ -100,10 +112,15 @@ public class tree_change {
 	        	String fr = first_facter(t_facters[n]);
 	        	String sr = second_facter(t_facters[n]);
 	        	if(organize_entity.check_in_list(verbs,sr) != -1){
+	        		try{
 	        	t_facters[n] = t_facters[n].replaceAll(sr,"__tmp__");
 	        	t_facters[n] = t_facters[n].replaceAll(fr,sr);
 	        	t_facters[n] = t_facters[n].replaceAll("__tmp__",fr);
 	        	t_facters[n] = t_facters[n].replaceAll(br_type(t_facters[n]),"rcmod'");
+	        		}catch(Exception e){
+	        			System.err.println(e);
+	        			break;
+	        		}
 	        	}
 	        	break;	
 	        	
@@ -111,10 +128,15 @@ public class tree_change {
 	        	String fc = first_facter(t_facters[n]);
 	        	String sc = second_facter(t_facters[n]);
 	        	if(organize_entity.check_in_list(verbs,sc) != -1){
+	        		try{
 	        	t_facters[n] = t_facters[n].replaceAll(sc,"__tmp__");
 	        	t_facters[n] = t_facters[n].replaceAll(fc,sc);
 	        	t_facters[n] = t_facters[n].replaceAll("__tmp__",fc);
 	        	t_facters[n] = t_facters[n].replaceAll(br_type(t_facters[n]),"cop'");
+	        		}catch(Exception e){
+	        			System.err.println(e);
+	        			break;
+	        		}
 	        	}
 	        	break;
 	        	

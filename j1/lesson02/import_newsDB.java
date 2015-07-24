@@ -21,7 +21,7 @@ public class import_newsDB {
 	private static int Max_file = 10000;
 	public static String Database_path = 
 			//"jdbc:sqlite:/Users/admin/Documents/workspace/server_news_analysis/relevant_news.db";
-			"jdbc:postgresql://localhost:5432/server_news_database";
+			"jdbc:postgresql://localhost:5432/server_news_production";
 			//"jdbc:postgresql://localhost:5432/server_news_development";
 	public static String UserName = "postgres";
 	public static String Pass = "postgres";
@@ -40,7 +40,7 @@ public class import_newsDB {
 			int i = 0;
 			while(rs.next()) {
 				news_tids[i] = rs.getString(1) + ".txt";//aid.txt
-				String news_text = rs.getString(5);//text ニュースの本文
+				String news_text = rs.getString(6);//text ニュースの本文
 				try{
 					FileWriter fw = new FileWriter(connecter_stan.ArticleFolder + news_tids[i]);  //���P
 					PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
@@ -443,49 +443,49 @@ public class import_newsDB {
 	//
 
 	//データベースでtextで格納された配列をリストへ変換
-	public static ArrayList<String> change_arraylist(String array_text){
-		//前後の[ ]を省く
-		String array_text1 = array_text.replaceAll("[", "");
-		String array_text2 = array_text1.replaceAll("]", "");
-
-		try {
-			//,とスペース繋いだ物でスプリット→配列へ
-			String[] changed_array = array_text2.split("\\, ");
-			ArrayList<String> result_list = new ArrayList<String>(Arrays.asList(changed_array));
-			return result_list;
-		} catch (Exception e) {
-			// TODO: handle exception
-			//失敗した場合は空のリストを返す
-			ArrayList<String> null_list = new ArrayList<String>();
-			return null_list;
-		}
-	}
-
-	public static Map change_map(String map_text, boolean int_or_str){
-		//前後の[ ]を省く
-		String map_text1 = map_text.replaceAll("[", "");
-		String map_text2 = map_text1.replaceAll("]", "");
-		Map result_map = new HashMap();
-
-		try {
-			//,とスペース繋いだ物でスプリット→配列へ
-			String[] changed_array = map_text2.split("\\, ");
-			for (int i = 0; i < changed_array.length; i++) {
-				//key=valueを分割
-				String[] key_value = changed_array[i].split("=");
-				if(int_or_str){
-					result_map.put(Integer.parseInt(key_value[0]), key_value[1]);	
-				}else{
-					result_map.put(key_value[0], key_value[1]);	
-				}
-			}
-			return result_map;
-
-		} catch (Exception e) {
-			// TODO: handle exception
-			//失敗した場合は空のリストを返す
-			return result_map;
-		}
-	}
+//	public static ArrayList<String> change_arraylist(String array_text){
+//		//前後の[ ]を省く
+//		String array_text1 = array_text.replaceAll("[", "");
+//		String array_text2 = array_text1.replaceAll("]", "");
+//
+//		try {
+//			//,とスペース繋いだ物でスプリット→配列へ
+//			String[] changed_array = array_text2.split("\\, ");
+//			ArrayList<String> result_list = new ArrayList<String>(Arrays.asList(changed_array));
+//			return result_list;
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			//失敗した場合は空のリストを返す
+//			ArrayList<String> null_list = new ArrayList<String>();
+//			return null_list;
+//		}
+//	}
+//
+//	public static Map change_map(String map_text, boolean int_or_str){
+//		//前後の[ ]を省く
+//		String map_text1 = map_text.replaceAll("[", "");
+//		String map_text2 = map_text1.replaceAll("]", "");
+//		Map result_map = new HashMap();
+//
+//		try {
+//			//,とスペース繋いだ物でスプリット→配列へ
+//			String[] changed_array = map_text2.split("\\, ");
+//			for (int i = 0; i < changed_array.length; i++) {
+//				//key=valueを分割
+//				String[] key_value = changed_array[i].split("=");
+//				if(int_or_str){
+//					result_map.put(Integer.parseInt(key_value[0]), key_value[1]);	
+//				}else{
+//					result_map.put(key_value[0], key_value[1]);	
+//				}
+//			}
+//			return result_map;
+//
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			//失敗した場合は空のリストを返す
+//			return result_map;
+//		}
+//	}
 }
 

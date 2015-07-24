@@ -29,6 +29,7 @@ public class connecter_stan {
 	public static void main(String[] args) throws Exception{
 		//元々の文章：[aid].txt 解析後の文章: re_[aid].txt databese（配列）入りはaid.txtのみ
 		//合成後の文章: [pid].txt_aid.txt 合成後かつ解析後の文章: re_[pid].txt_[aid].txt
+		manage_database.delete_mini_art();
 
 		//親記事を取ってくる
 		String[] top_news = import_newsDB.import_top_news(Article_database);
@@ -81,6 +82,15 @@ public class connecter_stan {
 				positive_score.start_positive(database, entities_list, core_entities);	
 				calculate_detail.dif_detailedness(database,entities_list,core_entities);
 
+			}else{
+				//分析しない場合は0を各尺度に代入
+				Map<String, Double> zero_score = new HashMap<String, Double>();
+				for (int j = 0; j < database.length; j++) {
+					zero_score.put(database[j], 0.0);
+				}
+				import_newsDB.entry_measure(zero_score, "polarities");
+				import_newsDB.entry_measure(zero_score, "coverages");
+				import_newsDB.entry_measure(zero_score, "details");
 			}
 			top_num++;}
 

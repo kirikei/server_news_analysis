@@ -66,7 +66,7 @@ public class manage_database {
 					"where current_news_views.aid = polarities.aid " +
 					"and current_news_views.aid = coverages.aid " +
 					"and current_news_views.aid = details.aid " +
-					"and current_news_views.analyzed_at = (timeptamp '"+now+"')";
+					"and current_news_views.analyzed_at = (timestamp '"+now+"')";
 			//時間の比較は文字列の比較でなく、timestamp型に直して比較
 			
 			Statement st1 = conn.createStatement();

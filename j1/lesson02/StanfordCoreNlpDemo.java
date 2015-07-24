@@ -91,6 +91,7 @@ public class StanfordCoreNlpDemo {
 				try{
 				stan(files);
 				}catch(Exception e){
+					System.err.println("Stanfrord_err : "+ e);
 					continue;
 				}
 			}
@@ -106,6 +107,7 @@ public class StanfordCoreNlpDemo {
 				try{
 				stan(files);
 				}catch(Exception e){
+					System.err.println("Stanfrord_err : "+ e);
 					continue;
 				}
 			}

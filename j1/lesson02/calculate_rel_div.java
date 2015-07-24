@@ -165,7 +165,7 @@ public class calculate_rel_div {
 		}
 		//csvへ出力
 		//positive_score.print_score(div_scores, args, "coverage");
-		import_newsDB.entry_measure(div_scores, "Coverages");
+		import_newsDB.entry_measure(div_scores, "coverages");
 		//positive_score.print_score(div_scores2, args, "coverage");
 		System.out.println("div_score 出力完了="+div_scores);
 

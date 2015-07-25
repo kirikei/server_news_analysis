@@ -93,7 +93,7 @@ public class import_newsDB {
 			int i = 1;
 			while(rs.next()) {
 				news_aids[i] = rs.getString(1) + ".txt";//aid.txt
-				String news_text = rs.getString(5);
+				String news_text = rs.getString(6);
 				try{
 					FileWriter fw = new FileWriter(connecter_stan.ArticleFolder + news_aids[i]);  //���P
 					PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
@@ -356,7 +356,7 @@ public class import_newsDB {
 	}
 
 	public static void update_analyzed_at(String[] articles, String time){
-
+		System.out.println("Carry out update_analyzed_at : "+ time);
 		try {
 			Class.forName("org.postgresql.Driver");
 			Connection conn = DriverManager.getConnection(

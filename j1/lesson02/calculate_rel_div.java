@@ -100,7 +100,13 @@ public class calculate_rel_div {
 		
 		System.out.println("@@@@commmmmm"+com_data+" com_list:"+com_list);
 		System.out.println(com_data / com_list.size());
-		return com_data / com_list.size();
+		//com_listが0のとき困るので
+		if(com_list.size() > 0){
+			return com_data / com_list.size();
+		}
+		else{
+			return 0.0;
+		}
 	}
 
 	//発散度

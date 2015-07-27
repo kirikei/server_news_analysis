@@ -60,24 +60,24 @@ public class StanfordCoreNlpDemo {
 		}
 
 
-		int i = 0;
-		// An Annotation is a Map and you can get and use the various analysis individually.
-		// For instance, this gets the parse tree of the first sentence in the text.
-		List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
-		//System.out.println(sentences);
-		if (sentences != null && sentences.size() > 0) {
-			while(i < sentences.size()){
-				CoreMap sentence = sentences.get(i);
-
-				Tree tree = sentence.get(TreeCoreAnnotations.TreeAnnotation.class);
-				//out.println();
-				//out.println("The first sentence parsed is:");
-				//tree.indexLeaves();
-				// System.out.println(tree);
-
-				i++;
-			}
-		}
+//		int i = 0;
+//		// An Annotation is a Map and you can get and use the various analysis individually.
+//		// For instance, this gets the parse tree of the first sentence in the text.
+//		List<CoreMap> sentences = annotation.get(CoreAnnotations.SentencesAnnotation.class);
+//		//System.out.println(sentences);
+//		if (sentences != null && sentences.size() > 0) {
+//			while(i < sentences.size()){
+//				CoreMap sentence = sentences.get(i);
+//
+//				//Tree tree = sentence.get(TreeCoreAnnotations.TreeAnnotation.class);
+//				//out.println();
+//				//out.println("The first sentence parsed is:");
+//				//tree.indexLeaves();
+//				// System.out.println(tree);
+//
+//				i++;
+//			}
+//		}
 	}
 
 	public static void start_stan1(String[] database) throws IOException{

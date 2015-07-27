@@ -28,8 +28,8 @@ public class positive_score {
 		Map<String,Double> entity_score = new HashMap<String,Double>();//entityの感情語スコア
 		int sentense_num = 1;//1???
 
-		//センテンス毎に回す
-		while(sentense_num < trees.size()){ 
+		//センテンス毎に回す(Sentence１からなので<=)
+		while(sentense_num <= trees.size()){ 
 
 			try{
 				//センテンス毎の部分木,動詞,感情語を取り出す

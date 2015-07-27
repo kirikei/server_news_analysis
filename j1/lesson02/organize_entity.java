@@ -17,13 +17,15 @@ public class organize_entity {
 		Map<Integer,ArrayList<String>> treesan = get_tree(file);
 		Map<Integer,ArrayList<String>> verbs = get_verb(file);//System.out.println("bbb");
 		ArrayList<String> sub_tree = new ArrayList<String>();
-		int p = 1,t = 0;
+		int sentence_num = 1,t = 0;
 		String[] ent_case = nomal_entity.split(" ");
 		String entity = ent_case[ent_case.length-1];
-		while(p < treesan.size()){
+		
+		//sentenceを一つずつ見ていく
+		while(sentence_num <= treesan.size()){
 			//System.out.println(p);
 			//System.out.println("aaa");
-			ArrayList<String> word_tree = tree_change.tree_c_m(treesan.get(p),verbs.get(p)); //System.out.println("word_tree:"+word_tree);
+			ArrayList<String> word_tree = tree_change.tree_c_m(treesan.get(sentence_num),verbs.get(sentence_num)); //System.out.println("word_tree:"+word_tree);
 			if((t = check_in_list(word_tree,entity)) != -1){//entityの含まれる木が存在するなら
 				String str = word_tree.get(t); //entityの存在するword_treeの要素をstrに格納
 				int i = 0,q=0;	//System.out.println(str);//
@@ -33,7 +35,7 @@ public class organize_entity {
 					String i_facter = word_tree.get(i);
 					String is_facter = tree_change.second_facter(i_facter);
 					//System.out.println("str "+str);
-					if((check_in_list_b(verbs.get(p),tree_change.first_facter(str)) != -1) || tree_change.first_facter(str).equals("ROOT-0")){//str�̑��v�f�������Ȃ�
+					if((check_in_list_b(verbs.get(sentence_num),tree_change.first_facter(str)) != -1) || tree_change.first_facter(str).equals("ROOT-0")){//str�̑��v�f�������Ȃ�
 						//System.out.println(str);
 						break;
 
@@ -76,7 +78,7 @@ public class organize_entity {
 				//System.out.println("sub_tree::" + sub_tree);
 
 				//(governor, dependency)から単語の列へ変換
-				subtrees.put(p, make_sentense(sub_tree));
+				subtrees.put(sentence_num, make_sentense(sub_tree));
 				
 				ArrayList<String> dummy = new ArrayList<String>();
 				sub_tree = dummy;
@@ -85,7 +87,7 @@ public class organize_entity {
 
 			}
 
-			p++;
+			sentence_num++;
 
 
 		}
@@ -107,7 +109,7 @@ public class organize_entity {
 				ArrayList<String> sentense = new ArrayList<String>();
 				ArrayList<Integer> itemIdList = new ArrayList<Integer>(subtrees.keySet());
 						
-				while(key < p){//���e���w�肷��
+				while(key < sentence_num){//���e���w�肷��
 					if(itemIdList.indexOf(key) != -1){
 						//１センテンス毎に取り出し
 						sentense = subtrees.get(key);
@@ -335,69 +337,75 @@ public class organize_entity {
 	}
 	//動詞を取り出す
 	public static Map<Integer,ArrayList<String>> get_verb(String args){
+		Map<Integer,ArrayList<String>> file_verbs = new HashMap<Integer,ArrayList<String>>();//<sentence, [verbs]>
 		try{
 			File file = new File(connecter_stan.ArticleFolder + args);
 
 			if (cut_file.checkBeforeReadfile(file)){
 				BufferedReader br = new BufferedReader(new FileReader(file));
-				String str;
-				int num = 1;
-				ArrayList<String> trees = new ArrayList<String>();
-				Map<Integer,ArrayList<String>> checker = new HashMap<Integer,ArrayList<String>>();
-				boolean flag = false;
-				while((str = br.readLine()) != null){
-					if(str.matches(".*" +"\\(\\. .*?\\)" + ".*")||str.length()==0){
-						flag = false;
+				String str1;
+				String[] strs1;
+				int sent_num = 0;
+				//boolean frag = false; //sentenceを拾ったらtrueになる
 
-						checker.put(num, trees);
-						num++;
-
-						ArrayList<String> dummy = new ArrayList<String>();
-						trees = dummy;
-					}
+				while((str1 = br.readLine()) != null){
 
 
+					ArrayList<String> verbs = new ArrayList<String>();//sentence_numのverbを格納
+					if(str1.matches("Sentence" + " #.*")){
+						String str_text = "";
+						sent_num++;
 
-					if(flag && str.length() > 0){
-						if (str.matches(".*" + "VB" + ".*")){
-							String regex = "(.*VB.*? )(.*?)(\\))(.*)";
-							Pattern p = Pattern.compile(regex);
-							Matcher m = p.matcher(str);
-							if(m.find()){
-								//System.out.println(m.group(2));
-								trees.add(m.group(2));	
+						while(str1.matches("\\(ROOT") == false){
+							str1 = br.readLine();
+							if (str1.matches(".*" + "Text=" + ".*")){
+								str_text = str_text+str1;
 							}
-						}	
+						}
+						//System.out.println("str_text"+str_text);
+						strs1 = str_text.split("] ");
+						int i=0;
 
+						while(i < strs1.length){
+							String regex = "(\\[Text=)(.*?)( C.*?)(PartOfSpeech=)(.*?)( .*?)(NamedEntityTag=)(.*)";
+							Pattern p = Pattern.compile(regex);
+							//System.out.println("aaa");
+							Matcher m2 = p.matcher(strs1[i]);
+							//
+							//SentiWordNetで得られる値を見つける
+							if(m2.find()){// ;
+									String text = m2.group(2);
+									String pos = m2.group(5);
+									if(pos.startsWith("V")){//動詞の場合
+										verbs.add(text);
+								}
 
+							}
+							i++;
 
+						}
+
+						if(verbs.size() > 0){//一つでも感情語があれば
+
+							file_verbs.put(sent_num, verbs);
+						}
 					}
-
-					if(str.matches("\\(ROOT")){
-						flag = true;//���̍s�ȉ������o��
-
-					}
-
-
 				}
-				//System.out.println("aaa");
-				//System.out.println(checker);
+				System.out.println(file_verbs);
 				br.close();
-				return checker;
+				return file_verbs;
 
 			}else{
-				System.out.println("ファイルが見つかりません。");
+				System.out.println("ファイルが見つからないか開けません");
 			}
 		}catch(FileNotFoundException e){
 			System.out.println(e);
 		}catch(IOException e){
 			System.out.println(e);
 		}
-		return null;
-
-
-
+		return file_verbs;
 	}
+		
 
 	public static void main(String[] args){
 		int a = 1;

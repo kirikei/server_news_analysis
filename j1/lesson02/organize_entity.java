@@ -356,7 +356,7 @@ public class organize_entity {
 						String str_text = "";
 						sent_num++;
 
-						while(str1.matches("\\(ROOT") == false){
+						while(str1.matches("\\(ROOT") == false && str1.matches("\\(X" + ".*") == false){
 							str1 = br.readLine();
 							if (str1.matches(".*" + "Text=" + ".*")){
 								str_text = str_text+str1;

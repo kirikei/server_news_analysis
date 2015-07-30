@@ -17,6 +17,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.stanford.nlp.io.EncodingPrintWriter.err;
+
 import j1.lesson02.organize_entity;
 
 public class calculate_detail {
@@ -352,8 +354,14 @@ public class calculate_detail {
 
 					String topic_file_name = named_entity + ".csv";
 					//System.out.println("name:"+topic_file_name);
-					Map<Integer,String[]> topic_words = TopicModel.topic_modeling(topic_file_name,named_entity,total_subtree);//各entityのtopic確率のcsvを製作
-					//Map<Integer,String[]> topic_words = get_csv1(connecter_stan.TopicCsvFolder+named_entity+"_topic_words.csv");//各entityのトピック単語を取得
+					Map<Integer,String[]> topic_words = new HashMap<Integer,String[]>();
+					try{
+						topic_words = TopicModel.topic_modeling(topic_file_name,named_entity,total_subtree);//各entityのtopic確率のcsvを製作
+					}catch(Exception e){
+						System.err.println("Mallet Error : "+e);
+						continue;
+					}
+					//topic_words = get_csv1(connecter_stan.TopicCsvFolder+named_entity+"_topic_words.csv");//各entityのトピック単語を取得
 					Map<Integer,String[]> topic_scores = get_csv1(connecter_stan.TopicCsvFolder+"topic_"+named_entity+".csv"); //各行のトピック確率
 					//print_map(topic_words);
 					//print_map(topic_scores);

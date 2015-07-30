@@ -93,7 +93,7 @@ public class manage_database {
 			System.out.println("delete_userscore: "+"connected");
 			Statement st = conn.createStatement();
 			
-			String exist_query = "delete from newsarticles where length(text) < 200";
+			String exist_query = "delete from newsarticles where length(text) < 300";
 			st.executeUpdate(exist_query);
 			st.close();
 			conn.close();

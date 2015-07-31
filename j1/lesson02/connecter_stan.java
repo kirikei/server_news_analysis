@@ -92,13 +92,16 @@ public class connecter_stan {
 				import_newsDB.entry_measure(zero_score, "coverages");
 				import_newsDB.entry_measure(zero_score, "details");
 			}
+			
+			//analyzed_atに時間を代入
+			Date now = new Date();
+			import_newsDB.update_analyzed_at(top_news[top_num], now.toString());
+			manage_database.create_view();
+			
 			top_num++;}
 
-		//analyzed_atに時間を纏めて代入
-		Date now = new Date();
-		import_newsDB.update_analyzed_at(top_news, now.toString());
 		
-		manage_database.create_view();
+		
 
 
 	}

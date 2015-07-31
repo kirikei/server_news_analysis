@@ -355,7 +355,7 @@ public class import_newsDB {
 		}
 	}
 
-	public static void update_analyzed_at(String[] articles, String time){
+	public static void update_analyzed_at(String top_article, String time){
 		System.out.println("Carry out update_analyzed_at : "+ time);
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -364,11 +364,11 @@ public class import_newsDB {
 					Database_path,UserName, Pass); 
 
 
-			for (int i = 0; i < articles.length; i++) {
+			//for (int i = 0; i < articles.length; i++) {
 				Statement st = conn.createStatement();
 
 				//aidの取り出し
-				String[] file_ids = articles[i].split("\\.");
+				String[] file_ids = top_article.split("\\.");
 				String aid = file_ids[0];
 
 				//aidがあれば更新、無ければ挿入
@@ -376,7 +376,7 @@ public class import_newsDB {
 
 				st.executeUpdate(sql);
 				st.close();
-			}
+			//}
 			conn.close(); 
 
 		} catch (ClassNotFoundException e) {

@@ -97,6 +97,7 @@ public class connecter_stan {
 			Date now = new Date();
 			import_newsDB.update_analyzed_at(top_news[top_num], now.toString());
 			manage_database.create_view();
+			manage_database.change_userscore(now.toString());
 			
 			top_num++;}
 

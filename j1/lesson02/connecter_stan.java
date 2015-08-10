@@ -34,6 +34,9 @@ public class connecter_stan {
 		//親記事を取ってくる
 		String[] top_news = import_newsDB.import_top_news(Article_database);
 		int top_num = 0;
+		Date create_now = new Date();
+		import_newsDB.update_created_at(top_news, create_now.toString());
+		
 		//SentiWordNetのMapを作る
 		sentiwordnet = new SentiWordNetDemoCode("SentiWordNet_3.0.0_20130122.txt");
 

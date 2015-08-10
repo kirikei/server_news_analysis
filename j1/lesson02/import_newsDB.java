@@ -36,7 +36,8 @@ public class import_newsDB {
 			Connection conn = DriverManager.getConnection(Database_path,UserName, Pass); 
 			System.out.println("import_top_news: "+"connected");
 			Statement st = conn.createStatement();
-			ResultSet rs = st.executeQuery("select * from " + database_name + " where pid is NULL and analyzed_at is NULL");
+			//pidがNULL, analyzed_atがNULL, Created_atがNULL（試行が重ならないように）
+			ResultSet rs = st.executeQuery("select * from " + database_name + " where pid is NULL and analyzed_at is NULL and created_at is NULL");
 			int i = 0;
 			while(rs.next()) {
 				news_tids[i] = rs.getString(1) + ".txt";//aid.txt
@@ -436,7 +437,38 @@ public class import_newsDB {
 
 	}
 
+	//今から分析する記事のcreated_atを更新
+	public static void update_created_at(String[] top_articles, String time){
+		System.out.println("Carry out update_created_at : "+ time);
+		try {
+			Class.forName("org.postgresql.Driver");
+			Connection conn = DriverManager.getConnection(
+					//"jdbc:sqlite:/Users/admin/Documents/java_set/test.db");
+					Database_path,UserName, Pass); 
 
+
+			for (int i = 0; i < top_articles.length; i++) {
+				Statement st = conn.createStatement();
+
+				//aidの取り出し
+				String[] file_ids = top_articles[i].split("\\.");
+				String aid = file_ids[0];
+
+				//aidがあれば更新、無ければ挿入
+				String sql = "update newsarticles set created_at = '"+time+"' where aid = '"+aid+"' or pid = '"+aid+"'";
+
+				st.executeUpdate(sql);
+				st.close();
+			}
+			conn.close(); 
+
+		} catch (ClassNotFoundException e) {
+			System.out.println(""+ e);
+
+		} catch (SQLException e) { 
+			System.out.println(""+ e);
+		}
+	}
 
 
 

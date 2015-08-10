@@ -88,7 +88,7 @@ public class TopicModel {
 
 
 				//�I�����b�Z�[�W����ʂɏo�͂���
-				System.out.println("出力完了＠Mallet");
+				//System.out.println("出力完了＠Mallet");
 
 
 

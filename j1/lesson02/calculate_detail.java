@@ -17,7 +17,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.stanford.nlp.io.EncodingPrintWriter.err;
+//import edu.stanford.nlp.io.EncodingPrintWriter.err;
 
 import j1.lesson02.organize_entity;
 
@@ -51,7 +51,7 @@ public class calculate_detail {
 			}
 			i++;
 		}
-		System.out.println("all_'" +all_ents);
+		//System.out.println("all_'" +all_ents);
 
 		//重複を取り除く
 
@@ -77,7 +77,7 @@ public class calculate_detail {
 						//System.out.println("****" +ent_file_subtree);
 			p++;
 		}
-		System.out.println("out of while" +ent_file_subtree);
+		//System.out.println("out of while" +ent_file_subtree);
 		return ent_file_subtree;
 
 
@@ -290,7 +290,7 @@ public class calculate_detail {
 		//System.out.println("kaisi");
 		Map<String, Map<String,Map<Integer,String[]>>> topic_data = make_t_e(args,all_entities);
 
-		System.out.println("aaaaaaaaa"+topic_data);
+		//System.out.println("aaaaaaaaa"+topic_data);
 		double topic_weight = Topic_Weight;
 		//while(topic_weight < 0.91){
 				
@@ -357,6 +357,9 @@ public class calculate_detail {
 					Map<Integer,String[]> topic_words = new HashMap<Integer,String[]>();
 					try{
 						topic_words = TopicModel.topic_modeling(topic_file_name,named_entity,total_subtree);//各entityのtopic確率のcsvを製作
+						if(topic_words.size() == 0){
+							continue;
+						}
 					}catch(Exception e){
 						System.err.println("Mallet Error : "+e);
 						continue;
